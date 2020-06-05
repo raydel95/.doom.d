@@ -93,12 +93,13 @@
 (add-hook 'Info-mode-hook #'mixed-pitch-mode)
 
 
-;; ranger configuration
+;; apps configuration
 (setq ranger-show-hidden t
       ranger-preview-file t)
 
 (map! :leader
       (:prefix ("a" . "apps")
+       :desc "processes" "p" 'list-processes
        :desc "ranger" "r" 'ranger
        :desc "deer" "d" 'deer
       )
