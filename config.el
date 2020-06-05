@@ -77,29 +77,17 @@
 (delq! t custom-theme-load-path)
 
 (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1)) ; use flyspell-lazy
-;; (after! company ;;company improvment
-;;   (setq company-idle-delay 0.4
-;;         company-minimum-prefix-length 2)
-;;   (setq company-show-numbers t)
+(after! company ;;company improvment
+  (setq company-idle-delay 0.5
+        company-minimum-prefix-length 2)
+  (setq company-show-numbers t)
 
-;; (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+(setq-default history-length 1000)
+(setq-default prescient-history-length 1000))
 
+(use-package! info-colors
+  :commands (info-colors-fontify-node))
 
-;; (setq-default history-length 1000)
-;; (setq-default prescient-history-length 1000)
+(add-hook 'Info-selection-hook 'info-colors-fontify-node)
 
-;; (set-company-backend! '(text-mode
-;;                         markdown-mode
-;;                         gfm-mode)
-;;   '(:seperate company-ispell
-;;               company-files
-;;               company-yasnippet))
-;; (set-company-backend! 'ess-r-mode '(company-R-args company-R-objects company-dabbrev-code :separate))
-
-
-;; (use-package! info-colors
-;;   :commands (info-colors-fontify-node))
-
-;; (add-hook 'Info-selection-hook 'info-colors-fontify-node)
-
-;; (add-hook 'Info-mode-hook #'mixed-pitch-mode)
+(add-hook 'Info-mode-hook #'mixed-pitch-mode)
