@@ -91,3 +91,15 @@
 (add-hook 'Info-selection-hook 'info-colors-fontify-node)
 
 (add-hook 'Info-mode-hook #'mixed-pitch-mode)
+
+
+;; ranger configuration
+(setq ranger-show-hidden t
+      ranger-preview-file t)
+
+(map! :leader
+      (:prefix ("a" . "apps")
+       :desc "ranger" "r" 'ranger
+       :desc "deer" "d" 'deer
+      )
+)
