@@ -128,3 +128,23 @@
        ("b" #'cider-format-edn-buffer
         "a" #'cider-format-edn-last-sexp
         "r" #'cider-format-edn-region))))))))
+
+
+
+;; "Disable font-lock in files with size > 100k
+;; or open in literall mode when size > 1mb
+(defun big-files ()
+           (interactive)
+  (let ((mid-size (* 100 1024))
+        (large-size (* 1024 1024))
+        (bsize (buffer-size))
+        (file-name (buffer-file-name)))
+    (cond ((> bsize large-size)
+           (when (yes-or-no-p
+                  (concat "This is a large file: " file-name  ", do you want to open it in literally mode"))
+                  (kill-buffer) (find-file-literally file-name)))
+          ((> bsize mid-size) (when (yes-or-no-p
+                  (concat "This is a large file: " file-name ", do you want disable font-lock mode to imporve performance?"))
+                                (font-lock-mode -1))))))
+
+(add-hook 'find-file-hook 'big-files)
