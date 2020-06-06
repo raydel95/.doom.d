@@ -50,6 +50,10 @@
 (setq doom-font (font-spec  :family "Source Code Pro" :size 13)
             doom-big-font (font-spec :family "Source Code Pro" :size 22))
 
+
+;; Prevents some cases of Emacs flickering
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+
 (setq-default
  delete-by-moving-to-trash t                      ; Delete files to trash
  window-combination-resize t                      ; take new window space from all other windows (not just current)
