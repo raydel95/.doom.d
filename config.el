@@ -103,6 +103,14 @@
        :desc "ranger" "r" 'ranger
        :desc "deer" "d" 'deer))
 
+
+(map! :leader
+      (:prefix ("c" . "code")
+       "l" 'evilnc-comment-or-uncomment-lines
+       "p" 'evilnc-comment-or-uncomment-paragraphs
+       "y" 'evilnc-copy-and-comment-lines
+       "t" 'evilnc-quick-comment-or-uncomment-to-the-line))
+
 (add-hook! clojure-mode
   (map!
    (:map (clojure-mode-map clojurescript-mode-map)
