@@ -101,6 +101,18 @@
       (:prefix ("a" . "apps")
        :desc "processes" "p" 'list-processes
        :desc "ranger" "r" 'ranger
-       :desc "deer" "d" 'deer
-      )
-)
+       :desc "deer" "d" 'deer))
+
+(add-hook! clojure-mode
+  (map!
+   (:map (clojure-mode-map clojurescript-mode-map)
+    (:localleader
+     (:prefix ("=" . "format")
+     ("=" #'cider-format-buffer
+      "f" #'cider-format-defun
+      "l" #'clojure-align
+      "r" #'cider-format-region
+      (:prefix ("e" . "edn")
+       ("b" #'cider-format-edn-buffer
+        "a" #'cider-format-edn-last-sexp
+        "r" #'cider-format-edn-region))))))))
