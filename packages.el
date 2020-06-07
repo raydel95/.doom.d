@@ -54,4 +54,4 @@
 
 (package! flyspell-lazy :pin "3ebf68cc9eb10c972a2de8d7861cbabbbce69570")
 
-(package! info-colors :pin "47ee73cc19b1049eef32c9f3e264ea7ef2aaf8a5")
+(package! company-box)
