@@ -31,7 +31,7 @@
 (setq doom-modeline-major-mode-icon t)
 
 ;; font
-(setq doom-font (font-spec  :family "Source Code Pro" :size 13)
+(setq doom-font (font-spec  :family "Source Code Pro" :size 15)
             doom-big-font (font-spec :family "Source Code Pro" :size 22))
 
 
@@ -126,4 +126,4 @@
 
 (setq doom-themes-treemacs-theme "doom-colors") ;;treemacs theme
 (doom-themes-treemacs-config)
-(doom-themes-visual-bell-config)
+;; (doom-themes-visual-bell-config)
