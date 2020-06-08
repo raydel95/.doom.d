@@ -36,22 +36,19 @@
 
 
 ;; Prevents some cases of Emacs flickering
-(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+;; (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
 (setq-default
  delete-by-moving-to-trash t                      ; Delete files to trash
  window-combination-resize t                      ; take new window space from all other windows (not just current)
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 
-(setq auto-save-default t                         ; Nobody likes to loose work, I certainly don't
-      inhibit-compacting-font-caches t)            ; When there are lots of glyphs, keep them in memory
+(setq auto-save-default t)                         ; Nobody likes to loose work, I certainly don't
 
 (display-time-mode 1)                             ; Enable time in the mode-line
 (display-battery-mode 1)                          ; On laptops it's nice to know how much power you have
 
-(if (eq initial-window-system 'x)                 ; if started by emacs command or desktop file
-    (toggle-frame-maximized)
-  (toggle-frame-fullscreen))
+(add-hook 'window-setup-hook #'toggle-frame-fullscreen)
 
 (setq evil-vsplit-window-right t                  ; move to the new window and select buffer to display
       evil-split-window-below t)
@@ -63,9 +60,9 @@
 (setq +ivy-buffer-preview t)
 
 (setq doom-theme 'doom-vibrant)                   ; theme
-(delq! t custom-theme-load-path)
+;; (delq! t custom-theme-load-path)
 
-(after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1)) ; use flyspell-lazy
+;; (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1)) ; use flyspell-lazy
 
 ;; company improvment
 (after! company
@@ -74,20 +71,17 @@
   (setq company-show-numbers t)
   (setq-default history-length 1000)
   (setq-default prescient-history-length 1000)
-  (setq company-box-doc-delay 0.2
-        company-box-show-single-candidate t))
+  )
 
-(add-hook 'company-mode-hook 'company-box-mode)
-
+;; (add-hook 'company-mode-hook 'company-box-mode)
+;; (setq company-box-doc-delay 0.2
+;;         company-box-show-single-candidate t)
 
 ;; Workaround bug in completion (see autolad.el)
 (after! cider
   (add-hook 'company-completion-started-hook 'user/set-company-maps)
   (add-hook 'company-completion-finished-hook 'user/unset-company-maps)
-  (add-hook 'company-completion-cancelled-hook 'user/unset-company-maps)
-
-
-  )
+  (add-hook 'company-completion-cancelled-hook 'user/unset-company-maps))
 
 ;; apps configuration
 (setq ranger-show-hidden t
