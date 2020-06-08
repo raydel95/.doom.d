@@ -43,10 +43,10 @@
  window-combination-resize t                      ; take new window space from all other windows (not just current)
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 
-(setq auto-save-default t)                         ; Nobody likes to loose work, I certainly don't
+;; (setq auto-save-default t)                         ; Nobody likes to loose work, I certainly don't
 
 (display-time-mode 1)                             ; Enable time in the mode-line
-(display-battery-mode 1)                          ; On laptops it's nice to know how much power you have
+;; (display-battery-mode 1)                          ; On laptops it's nice to know how much power you have
 
 (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
 
@@ -64,18 +64,18 @@
 
 ;; (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1)) ; use flyspell-lazy
 
+
+(setq company-selection-wrap-around t)
 ;; company improvment
 (after! company
-  (setq company-idle-delay 0.1
-        company-minimum-prefix-length 2)
-  (setq company-show-numbers t)
+  (setq
+   ;; company-idle-delay 0.3
+   ;; company-box-doc-delay 0.3
+   company-box-show-single-candidate t
+   company-minimum-prefix-length 3
+   company-show-numbers t)
   (setq-default history-length 1000)
-  (setq-default prescient-history-length 1000)
-  )
-
-;; (add-hook 'company-mode-hook 'company-box-mode)
-;; (setq company-box-doc-delay 0.2
-;;         company-box-show-single-candidate t)
+  (setq-default prescient-history-length 1000))
 
 ;; Workaround bug in completion (see autolad.el)
 (after! cider
@@ -105,6 +105,13 @@
   (map!
    (:map (clojure-mode-map clojurescript-mode-map)
     (:localleader
+     (:prefix ("e" . "eval")
+     (";" #'cider-eval-defun-to-comment)
+     (:prefix ("p" . "pprint")
+      (":" #'cider-pprint-eval-last-sexp-to-comment)
+      (";" #'cider-pprint-eval-defun-to-comment)
+      ("d" #'cider-pprint-eval-defun-at-point)
+      ("e" #'cider-pprint-eval-last-sexp)))
      (:prefix ("=" . "format")
       ("=" #'cider-format-buffer
        "f" #'cider-format-defun
@@ -115,18 +122,7 @@
          "a" #'cider-format-edn-last-sexp
          "r" #'cider-format-edn-region))))))))
 
-
 (setq large-file-warning-threshold 1000000)
-;; "Disable font-lock in files with size > 100k
-;; or open in literall mode when size > 1mb
-;; (defun big-files ()
-;;   (interactive)
-;;     (when (and (> (buffer-size) (* 100 1024)) font-lock-mode (yes-or-no-p
-;;                                (concat "This is a large file: "
-;;                                        (buffer-file-name)
-;;                                        ", do you want disable font-lock mode to imporve performance?")))
-;;       (font-lock-mode -1)))
-;; (add-hook 'find-file-hook 'big-files)
 
 (setq doom-themes-treemacs-theme "doom-colors") ;;treemacs theme
 (doom-themes-treemacs-config)
