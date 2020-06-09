@@ -31,22 +31,17 @@
 (setq doom-modeline-major-mode-icon t)
 
 ;; font
-(setq doom-font (font-spec  :family "Source Code Pro" :size 15)
+(setq doom-font (font-spec  :family "Source Code Pro" :size 14)
             doom-big-font (font-spec :family "Source Code Pro" :size 22))
 
-
-;; Prevents some cases of Emacs flickering
-;; (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
 (setq-default
  delete-by-moving-to-trash t                      ; Delete files to trash
  window-combination-resize t                      ; take new window space from all other windows (not just current)
  x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 
-;; (setq auto-save-default t)                         ; Nobody likes to loose work, I certainly don't
-
 (display-time-mode 1)                             ; Enable time in the mode-line
-;; (display-battery-mode 1)                          ; On laptops it's nice to know how much power you have
+(display-battery-mode 1)                          ; On laptops it's nice to know how much power you have
 
 (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
 
@@ -69,10 +64,10 @@
 ;; company improvment
 (after! company
   (setq
-   ;; company-idle-delay 0.3
-   ;; company-box-doc-delay 0.3
+   company-idle-delay 0.3
+   company-box-doc-delay 0.3
    company-box-show-single-candidate t
-   company-minimum-prefix-length 3
+   company-minimum-prefix-length 1
    company-show-numbers t)
   (setq-default history-length 1000)
   (setq-default prescient-history-length 1000))
