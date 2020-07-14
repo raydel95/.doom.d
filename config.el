@@ -28,7 +28,10 @@
 (setq which-key-idle-delay 0.4)
 
 ;; mode-line
-(setq doom-modeline-major-mode-icon t)
+(setq doom-modeline-major-mode-icon t
+      doom-modeline-env-version t
+      doom-modeline-env-load-string "..."
+      doom-modeline-buffer-encoding t)
 
 ;; font
 (setq doom-font (font-spec  :family "Source Code Pro" :size 14)
@@ -73,10 +76,14 @@
   (setq-default prescient-history-length 1000))
 
 ;; Workaround bug in completion (see autolad.el)
-(after! cider
-  (add-hook 'company-completion-started-hook 'user/set-company-maps)
-  (add-hook 'company-completion-finished-hook 'user/unset-company-maps)
-  (add-hook 'company-completion-cancelled-hook 'user/unset-company-maps))
+;; (after! cider
+;;   (add-hook 'company-completion-started-hook 'user/set-company-maps)
+;;   (add-hook 'company-completion-finished-hook 'user/unset-company-maps)
+;;   (add-hook 'company-completion-cancelled-hook 'user/unset-company-maps))
+
+(add-hook 'company-completion-started-hook 'user/set-company-maps)
+(add-hook 'company-completion-finished-hook 'user/unset-company-maps)
+(add-hook 'company-completion-cancelled-hook 'user/unset-company-maps)
 
 ;; apps configuration
 (setq ranger-show-hidden t
@@ -121,4 +128,3 @@
 
 (setq doom-themes-treemacs-theme "doom-colors") ;;treemacs theme
 (doom-themes-treemacs-config)
-;; (doom-themes-visual-bell-config)
