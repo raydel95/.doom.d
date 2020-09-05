@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "Raydel Enrique Alonso Baryolo"
-      user-mail-address "raydelalonsobaryolo@gmail.com")
+(setq user-full-name "Ivan Galban"
+      user-mail-address "ivan.galban.smith@gmail.com")
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
