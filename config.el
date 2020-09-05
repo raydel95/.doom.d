@@ -25,7 +25,7 @@
 (setq doom-localleader-key ",")
 
 ;; which-key
-(setq which-key-idle-delay 0.4)
+(setq which-key-idle-delay 0.2)
 
 ;; mode-line
 (setq doom-modeline-major-mode-icon t
@@ -128,3 +128,21 @@
 
 (setq doom-themes-treemacs-theme "doom-colors") ;;treemacs theme
 (doom-themes-treemacs-config)
+
+
+(defun typescript-mode-setup ()
+  "Custom setup for Typescript mode"
+  (setq flycheck-checker 'javascript-eslint)
+  )
+(add-hook 'typescript-mode-hook 'typescript-mode-setup)
+
+(defun setup-tide-mode ()
+  "Setup function for tide."
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+(add-hook 'typescript-mode #'setup-tide-mode)
