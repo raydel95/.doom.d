@@ -25,7 +25,7 @@
 (setq doom-localleader-key ",")
 
 ;; which-key
-(setq which-key-idle-delay 0.2)
+(setq which-key-idle-delay 0.1)
 
 ;; mode-line
 (setq doom-modeline-major-mode-icon t
@@ -67,10 +67,10 @@
 ;; company improvment
 (after! company
   (setq
-   company-idle-delay 0.3
-   company-box-doc-delay 0.3
+   company-idle-delay 0.1
+   company-box-doc-delay 0.2
    company-box-show-single-candidate t
-   company-minimum-prefix-length 1
+   company-minimum-prefix-length 0
    company-show-numbers t)
   (setq-default history-length 1000)
   (setq-default prescient-history-length 1000))
@@ -84,6 +84,30 @@
 (add-hook 'company-completion-started-hook 'user/set-company-maps)
 (add-hook 'company-completion-finished-hook 'user/unset-company-maps)
 (add-hook 'company-completion-cancelled-hook 'user/unset-company-maps)
+
+;; Similar to C-x C-e, but sends to REBL
+(defun rebl-eval-last-sexp ()
+  (interactive)
+  (let* ((bounds (cider-last-sexp 'bounds))
+         (s (cider-last-sexp))
+         (reblized (concat "(cognitect.rebl/inspect " s ")")))
+    (cider-interactive-eval reblized nil bounds (cider--nrepl-print-request-map))))
+
+;; Similar to C-M-x, but sends to REBL
+(defun rebl-eval-defun-at-point ()
+  (interactive)
+  (let* ((bounds (cider-defun-at-point 'bounds))
+         (s (cider-defun-at-point))
+         (reblized (concat "(cognitect.rebl/inspect " s ")")))
+    (cider-interactive-eval reblized nil bounds (cider--nrepl-print-request-map))))
+
+;; C-S-x send defun to rebl
+;; C-x C-r send last sexp to rebl (Normally bound to "find-file-read-only"... Who actually uses that though?)
+(add-hook 'cider-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-S-x") #'rebl-eval-defun-at-point)
+            (local-set-key (kbd "C-x C-r") #'rebl-eval-last-sexp)))
+
 
 ;; apps configuration
 (setq ranger-show-hidden t
@@ -107,6 +131,9 @@
   (map!
    (:map (clojure-mode-map clojurescript-mode-map)
     (:localleader
+     (:prefix ("s" . "send-to-rebl")
+      ("d" #'rebl-eval-defun-at-point)
+      ("e" #'rebl-eval-last-sexp))
      (:prefix ("e" . "eval")
      (";" #'cider-eval-defun-to-comment)
      (:prefix ("p" . "pprint")
