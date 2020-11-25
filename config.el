@@ -14,6 +14,8 @@
 (setq org-directory "~/org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
+
+
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 
@@ -63,17 +65,16 @@
 ;; (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1)) ; use flyspell-lazy
 
 
-(setq company-selection-wrap-around t)
 ;; company improvment
-(after! company
-  (setq
-   company-idle-delay 0.3
-   company-box-doc-delay 0.3
-   company-box-show-single-candidate t
-   company-minimum-prefix-length 1
-   company-show-numbers t)
-  (setq-default history-length 1000)
-  (setq-default prescient-history-length 1000))
+(setq
+ company-selection-wrap-around t
+ company-idle-delay 0.4
+ company-box-doc-delay 0.4
+ company-box-show-single-candidate t
+ company-minimum-prefix-length 1
+ company-show-numbers t)
+(setq-default history-length 1000)
+(setq-default prescient-history-length 1000)
 
 ;; Workaround bug in completion (see autolad.el)
 ;; (after! cider
@@ -86,6 +87,7 @@
 (add-hook 'company-completion-cancelled-hook 'user/unset-company-maps)
 
 ;; apps configuration
+;;dired
 (setq ranger-show-hidden t
       ranger-preview-file t)
 
@@ -124,7 +126,14 @@
          "a" #'cider-format-edn-last-sexp
          "r" #'cider-format-edn-region))))))))
 
+;;modeline
+(setq inhibit-compacting-font-caches t)
+(setq find-file-visit-truename t)
+
+
 (setq large-file-warning-threshold 1000000)
 
 (setq doom-themes-treemacs-theme "doom-colors") ;;treemacs theme
 (doom-themes-treemacs-config)
+
+(setq org-babel-clojure-backend 'cider)
