@@ -34,8 +34,8 @@
       doom-modeline-buffer-encoding t)
 
 ;; font
-(setq doom-font (font-spec  :family "Source Code Pro" :size 14)
-            doom-big-font (font-spec :family "Source Code Pro" :size 22))
+(setq doom-font     (font-spec :family "Source Code Pro" :size 14)
+      doom-big-font (font-spec :family "Source Code Pro" :size 22))
 
 
 (setq-default
@@ -70,7 +70,7 @@
    company-idle-delay 0.1
    company-box-doc-delay 0.2
    company-box-show-single-candidate t
-   company-minimum-prefix-length 0
+   company-minimum-prefix-length 1
    company-show-numbers t)
   (setq-default history-length 1000)
   (setq-default prescient-history-length 1000))
