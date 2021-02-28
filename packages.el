@@ -58,4 +58,16 @@
 
 (package! nov)
 
-;; (package! lsp-ui :disable t)
+(package! clojure-mode)
+
+(package! lsp-mode)
+
+(package! cider)
+
+(package! lsp-treemacs)
+
+(package! flycheck)
+
+(package! company)
+
+(package! lispyville)
