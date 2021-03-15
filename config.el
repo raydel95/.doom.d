@@ -14,8 +14,9 @@
 (setq org-directory "~/org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
+
+
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
 
 
 ;; disable confirmation message on exit
@@ -63,7 +64,6 @@
 ;; (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1)) ; use flyspell-lazy
 
 
-(setq company-selection-wrap-around t)
 ;; company improvment
 (after! company
   (setq
@@ -110,6 +110,7 @@
 
 
 ;; apps configuration
+;;dired
 (setq ranger-show-hidden t
       ranger-preview-file t)
 
@@ -120,12 +121,12 @@
        :desc "deer" "d" 'deer))
 
 
-(map! :leader
-      (:prefix ("c" . "code")
-       "l" 'evilnc-comment-or-uncomment-lines
-       "p" 'evilnc-comment-or-uncomment-paragraphs
-       "y" 'evilnc-copy-and-comment-lines
-       "t" 'evilnc-quick-comment-or-uncomment-to-the-line))
+;; (map! :leader
+;;       (:prefix ("c" . "code")
+;;        "l" 'evilnc-comment-or-uncomment-lines
+;;        "p" 'evilnc-comment-or-uncomment-paragraphs
+;;        "y" 'evilnc-copy-and-comment-lines
+;;        "t" 'evilnc-quick-comment-or-uncomment-to-the-line))
 
 (add-hook! clojure-mode
   (map!
@@ -151,6 +152,11 @@
          "a" #'cider-format-edn-last-sexp
          "r" #'cider-format-edn-region))))))))
 
+;;modeline
+(setq inhibit-compacting-font-caches t)
+(setq find-file-visit-truename t)
+
+
 (setq large-file-warning-threshold 1000000)
 
 (setq doom-themes-treemacs-theme "doom-colors") ;;treemacs theme
@@ -163,25 +169,64 @@
   )
 (add-hook 'typescript-mode-hook 'typescript-mode-setup)
 
-(defun setup-tide-mode ()
-  "Setup function for tide."
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  (company-mode +1))
-(add-hook 'typescript-mode #'setup-tide-mode)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages '(omnisharp)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+;;lsp-config
+(add-hook 'clojure-mode-hook 'lsp)
+(add-hook 'clojurescript-mode-hook 'lsp)
+(add-hook 'clojurec-mode-hook 'lsp)
+
+(setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
+      treemacs-space-between-root-nodes nil
+      company-idle-delay 0.0
+      company-minimum-prefix-length 1
+      lsp-lens-enable t
+      lsp-signature-auto-activate nil
+      ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
+      ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
+      )
+
+(use-package! cider
+  :after clojure-mode
+  :config
+  (set-lookup-handlers! 'cider-mode nil))
+
+(use-package! clj-refactor
+  :after clojure-mode
+  :config
+  (set-lookup-handlers! 'clj-refactor-mode nil))
+
+(setq cljr-add-ns-to-blank-clj-files nil) ; disable clj-refactor adding ns to blank files
+
+
+;; lispyville
+(use-package! lispyville
+  :hook ((common-lisp-mode . lispyville-mode)
+         (emacs-lisp-mode . lispyville-mode)
+         (scheme-mode . lispyville-mode)
+         (racket-mode . lispyville-mode)
+         (hy-mode . lispyville-mode)
+         (lfe-mode . lispyville-mode)
+         (clojure-mode . lispyville-mode))
+  :config
+  (lispyville-set-key-theme
+   '(additional
+     additional-insert
+     (additional-movement normal visual motion)
+     (additional-wrap normal insert)
+     (atom-movement normal visual)
+     c-w
+     c-u
+     (commentary normal visual)
+     escape
+     (operators normal)
+     (prettify insert)
+     slurp/barf-cp)))
+
+
+(let ((private-emacs-path "~/.doom-private/"))
+  (when (file-directory-p private-emacs-path)
+    (add-to-list 'load-path private-emacs-path)
+    (require 'private)))
+
+(setq auto-save-default t)

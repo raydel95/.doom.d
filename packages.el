@@ -55,3 +55,19 @@
 (package! flyspell-lazy :pin "3ebf68cc9eb10c972a2de8d7861cbabbbce69570")
 
 (package! grip-mode)
+
+(package! nov)
+
+(package! clojure-mode)
+
+(package! lsp-mode)
+
+(package! cider)
+
+(package! lsp-treemacs)
+
+(package! flycheck)
+
+(package! company)
+
+(package! lispyville)
