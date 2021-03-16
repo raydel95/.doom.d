@@ -199,31 +199,6 @@
 (setq cljr-add-ns-to-blank-clj-files nil) ; disable clj-refactor adding ns to blank files
 
 
-;; lispyville
-(use-package! lispyville
-  :hook ((common-lisp-mode . lispyville-mode)
-         (emacs-lisp-mode . lispyville-mode)
-         (scheme-mode . lispyville-mode)
-         (racket-mode . lispyville-mode)
-         (hy-mode . lispyville-mode)
-         (lfe-mode . lispyville-mode)
-         (clojure-mode . lispyville-mode))
-  :config
-  (lispyville-set-key-theme
-   '(additional
-     additional-insert
-     (additional-movement normal visual motion)
-     (additional-wrap normal insert)
-     (atom-movement normal visual)
-     c-w
-     c-u
-     (commentary normal visual)
-     escape
-     (operators normal)
-     (prettify insert)
-     slurp/barf-cp)))
-
-
 (let ((private-emacs-path "~/.doom-private/"))
   (when (file-directory-p private-emacs-path)
     (add-to-list 'load-path private-emacs-path)

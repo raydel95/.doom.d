@@ -69,5 +69,3 @@
 (package! flycheck)
 
 (package! company)
-
-(package! lispyville)
