@@ -121,12 +121,12 @@
        :desc "deer" "d" 'deer))
 
 
-;; (map! :leader
-;;       (:prefix ("c" . "code")
-;;        "l" 'evilnc-comment-or-uncomment-lines
-;;        "p" 'evilnc-comment-or-uncomment-paragraphs
-;;        "y" 'evilnc-copy-and-comment-lines
-;;        "t" 'evilnc-quick-comment-or-uncomment-to-the-line))
+(map! :leader
+      (:prefix ("c" . "code")
+       "l" 'evilnc-comment-or-uncomment-lines
+       "p" 'evilnc-comment-or-uncomment-paragraphs
+       "y" 'evilnc-copy-and-comment-lines
+       "t" 'evilnc-quick-comment-or-uncomment-to-the-line))
 
 (add-hook! clojure-mode
   (map!
@@ -171,20 +171,20 @@
 
 
 ;;lsp-config
-(add-hook 'clojure-mode-hook 'lsp)
-(add-hook 'clojurescript-mode-hook 'lsp)
-(add-hook 'clojurec-mode-hook 'lsp)
+;; (add-hook 'clojure-mode-hook 'lsp)
+;; (add-hook 'clojurescript-mode-hook 'lsp)
+;; (add-hook 'clojurec-mode-hook 'lsp)
 
-(setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      treemacs-space-between-root-nodes nil
-      company-idle-delay 0.0
-      company-minimum-prefix-length 1
-      lsp-lens-enable t
-      lsp-signature-auto-activate nil
-      ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
-      ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
-      )
+;; (setq gc-cons-threshold (* 100 1024 1024)
+;;       read-process-output-max (* 1024 1024)
+;;       treemacs-space-between-root-nodes nil
+;;       company-idle-delay 0.0
+;;       company-minimum-prefix-length 1
+;;       lsp-lens-enable t
+;;       lsp-signature-auto-activate nil
+;;       ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
+;;       ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
+;;       )
 
 (use-package! cider
   :after clojure-mode
