@@ -67,10 +67,10 @@
 ;; company improvment
 (setq
  company-selection-wrap-around t
- company-idle-delay 0.4
- company-box-doc-delay 0.4
+ company-idle-delay 0.0
+ company-box-doc-delay 0.0
  company-box-show-single-candidate t
- company-minimum-prefix-length 1
+ company-minimum-prefix-length 0
  company-show-numbers t)
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
@@ -148,7 +148,7 @@
       read-process-output-max (* 1024 1024)
       treemacs-space-between-root-nodes nil
       company-idle-delay 0.0
-      company-minimum-prefix-length 1
+      company-minimum-prefix-length 0
       lsp-lens-enable t
       lsp-signature-auto-activate nil
       ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
@@ -199,3 +199,4 @@
     (require 'private)))
 
 (setq auto-save-default t)
+(auto-save-mode 1)

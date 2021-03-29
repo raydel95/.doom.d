@@ -21,6 +21,7 @@
        :completion
        (company          ; the ultimate code completion backend
         +auto            ; as-you-type code completion
+        +tng
         +childframe)       ;; helm              ; the *other* search engine for love and life
        ;; ido               ; the other *other* search engine...
        (ivy              ; a search engine for love and life
@@ -49,7 +50,7 @@
         +all
         +defaults)   
        ;;tabs              ; an tab bar for Emacs
-       treemacs           ; a project drawer, like neotree but cooler
+       ;;treemacs           ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
@@ -73,7 +74,7 @@
 
        :emacs
        (dired
-        ;; +ranger
+        +ranger
         +icons)             ; making dired pretty [functional]
        electric          ; smarter, keyword-based electric-indent
        (ibuffer +icons)         ; interactive buffer management
@@ -102,7 +103,6 @@
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
        (lsp +peek)
-       macos             ; MacOS-specific commands
        (magit +forge)            ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -114,15 +114,17 @@
        ;;tmux              ; an API for interacting with tmux
        ;; upload            ; map local to remote projects via ssh/ftp
 
+       :os macos             ; MacOS-specific commands
+
        :lang
        ;;agda              ; types of types of types of types...
-       cc                ; C/C++/Obj-C madness
+       ;; cc                ; C/C++/Obj-C madness
        (clojure +lsp)           ; java with a lisp
        ;; clojure          ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
        ;;crystal           ; ruby at the speed of c
-       csharp ; unity, .NET, and mono shenanigans
+       ;; csharp ; unity, .NET, and mono shenanigans
        data              ; config/data formats
        ;;(dart +flutter)   ; paint ui and not much else
        ;;elixir            ; erlang done right
@@ -157,7 +159,7 @@
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python +conda)     ; beautiful is better than ugly
+       ;; (python +conda)     ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        rest              ; Emacs as a REST client
