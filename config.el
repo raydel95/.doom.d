@@ -158,7 +158,9 @@
 (use-package! cider
   :after clojure-mode
   :config
-  (set-lookup-handlers! 'cider-mode nil))
+  (set-lookup-handlers! 'cider-mode nil)
+  (setq cider-lein-parameters
+      (concat "with-profiles +nrebl " cider-lein-parameters)))
 
 (use-package! clj-refactor
   :after clojure-mode
