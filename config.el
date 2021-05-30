@@ -14,10 +14,27 @@
 (setq org-directory "~/org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
-
-
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 
+;; (setq display-line-numbers-type t)
+
+
+;; Here are some additional functions/macros that could help you configure Doom:
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
+;; This will open documentation for it, including demos of how they are used.
+;;
+;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
+;; they are implemented.
 
 ;; disable confirmation message on exit
 (setq confirm-kill-emacs nil)
@@ -64,16 +81,17 @@
 ;; (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1)) ; use flyspell-lazy
 
 
+; FIXME:
 ;; company improvment
-(after! company
-  (setq
-   company-idle-delay 0.1
-   company-box-doc-delay 0.2
-   company-box-show-single-candidate t
-   company-minimum-prefix-length 1
-   company-show-numbers t)
-  (setq-default history-length 1000)
-  (setq-default prescient-history-length 1000))
+;; (after! company
+;;   (setq
+;;    company-idle-delay 0.1
+;;    company-box-doc-delay 0.2
+;;    company-box-show-single-candidate t
+;;    company-minimum-prefix-length 1
+;;    company-show-numbers t)
+;;   (setq-default history-length 1000)
+;;   (setq-default prescient-history-length 1000))
 
 ;; Workaround bug in completion (see autolad.el)
 ;; (after! cider
@@ -81,10 +99,12 @@
 ;;   (add-hook 'company-completion-finished-hook 'user/unset-company-maps)
 ;;   (add-hook 'company-completion-cancelled-hook 'user/unset-company-maps))
 
-(add-hook 'company-completion-started-hook 'user/set-company-maps)
-(add-hook 'company-completion-finished-hook 'user/unset-company-maps)
-(add-hook 'company-completion-cancelled-hook 'user/unset-company-maps)
+;; (add-hook 'company-completion-started-hook 'user/set-company-maps)
+;; (add-hook 'company-completion-finished-hook 'user/unset-company-maps)
+;; (add-hook 'company-completion-cancelled-hook 'user/unset-company-maps)
 
+
+;; REBL
 ;; Similar to C-x C-e, but sends to REBL
 (defun rebl-eval-last-sexp ()
   (interactive)
@@ -121,12 +141,18 @@
        :desc "deer" "d" 'deer))
 
 
-(map! :leader
-      (:prefix ("c" . "code")
-       "l" 'evilnc-comment-or-uncomment-lines
-       "p" 'evilnc-comment-or-uncomment-paragraphs
-       "y" 'evilnc-copy-and-comment-lines
-       "t" 'evilnc-quick-comment-or-uncomment-to-the-line))
+;; FIXME:
+;; (map! :leader
+;;       (:prefix ("c" . "code")
+;;        "l" 'evilnc-comment-or-uncomment-lines
+;;        "p" 'evilnc-comment-or-uncomment-paragraphs
+;;        "y" 'evilnc-copy-and-comment-lines
+;;        "t" 'evilnc-quick-comment-or-uncomment-to-the-line))
+
+
+;;; Major Mode
+
+;; Clojure
 
 (add-hook! clojure-mode
   (map!
@@ -170,26 +196,44 @@
 (add-hook 'typescript-mode-hook 'typescript-mode-setup)
 
 
-;;lsp-config
-;; (add-hook 'clojure-mode-hook 'lsp)
-;; (add-hook 'clojurescript-mode-hook 'lsp)
-;; (add-hook 'clojurec-mode-hook 'lsp)
+;; lsp-config
+(add-hook 'clojure-mode-hook 'lsp)
+(add-hook 'clojurescript-mode-hook 'lsp)
+(add-hook 'clojurec-mode-hook 'lsp)
 
-;; (setq gc-cons-threshold (* 100 1024 1024)
-;;       read-process-output-max (* 1024 1024)
-;;       treemacs-space-between-root-nodes nil
-;;       company-idle-delay 0.0
-;;       company-minimum-prefix-length 1
-;;       lsp-lens-enable t
-;;       lsp-signature-auto-activate nil
-;;       ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
-;;       ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
-;;       )
+(setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
+      treemacs-space-between-root-nodes nil
+      company-idle-delay 0.0
+      company-minimum-prefix-length 1
+      lsp-lens-enable t
+      lsp-signature-auto-activate nil
+      ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
+      ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
+      )
+
+(use-package! lsp-treemacs
+  :config
+  (setq lsp-treemacs-error-list-current-project-only t))
+
+(use-package! lsp-ui
+  :after lsp-mode
+  :commands lsp-ui-mode
+  :config
+  (setq lsp-ui-peek-list-width 60
+        lsp-ui-doc-max-width 60
+        lsp-ui-peek-fontify 'always
+        lsp-ui-sideline-show-code-actions nil))
+
+(use-package! treemacs-all-the-icons
+  :after treemacs)
 
 (use-package! cider
   :after clojure-mode
   :config
-  (set-lookup-handlers! 'cider-mode nil))
+  (set-lookup-handlers! 'cider-mode nil)
+  (setq cider-lein-parameters
+      (concat "with-profiles +nrebl " cider-lein-parameters)))
 
 (use-package! clj-refactor
   :after clojure-mode
