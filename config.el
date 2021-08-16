@@ -43,7 +43,7 @@
 (setq doom-localleader-key ",")
 
 ;; which-key
-(setq which-key-idle-delay 0.1)
+(setq which-key-idle-delay 0.3)
 
 ;; mode-line
 (setq doom-modeline-major-mode-icon t
@@ -231,9 +231,7 @@
 (use-package! cider
   :after clojure-mode
   :config
-  (set-lookup-handlers! 'cider-mode nil)
-  (setq cider-lein-parameters
-      (concat "with-profiles +nrebl " cider-lein-parameters)))
+  (set-lookup-handlers! 'cider-mode nil))
 
 (use-package! clj-refactor
   :after clojure-mode
