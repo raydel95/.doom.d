@@ -1,24 +1,4 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
-(setq user-full-name "Ivan Galban"
-      user-mail-address "ivan.galban.smith@gmail.com")
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-
-;; (setq display-line-numbers-type t)
-
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -35,6 +15,28 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
+
+
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;; sync' after modifying this file!
+
+(let ((nudev-emacs-path "~/dev/nu/nudev/ides/emacs/"))
+  (when (file-directory-p nudev-emacs-path)
+    (add-to-list 'load-path nudev-emacs-path)
+    (require 'nu nil t)
+    (require 'nu-datomic-query nil t)))
+
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets.
+(setq user-full-name "Ivan Galban"
+      user-mail-address "ivan.galban.smith@gmail.com")
+
+
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+
+;; (setq display-line-numbers-type t)
 
 ;; disable confirmation message on exit
 (setq confirm-kill-emacs nil)
@@ -75,51 +77,11 @@
 
 (setq +ivy-buffer-preview t)
 
-(setq doom-theme 'doom-vibrant)                   ; theme
-;; (delq! t custom-theme-load-path)
+(setq doom-theme 'doom-vibrant)
 
-;; (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1)) ; use flyspell-lazy
-
-
-; FIXME:
-;; company improvment
-;; (after! company
-;;   (setq
-;;    company-idle-delay 0.1
-;;    company-box-doc-delay 0.2
-;;    company-box-show-single-candidate t
-;;    company-minimum-prefix-length 1
-;;    company-show-numbers t)
-;;   (setq-default history-length 1000)
-;;   (setq-default prescient-history-length 1000))
-
-;; Workaround bug in completion (see autolad.el)
-;; (after! cider
-;;   (add-hook 'company-completion-started-hook 'user/set-company-maps)
-;;   (add-hook 'company-completion-finished-hook 'user/unset-company-maps)
-;;   (add-hook 'company-completion-cancelled-hook 'user/unset-company-maps))
-
-;; (add-hook 'company-completion-started-hook 'user/set-company-maps)
-;; (add-hook 'company-completion-finished-hook 'user/unset-company-maps)
-;; (add-hook 'company-completion-cancelled-hook 'user/unset-company-maps)
-
-
-;; REBL
-;; Similar to C-x C-e, but sends to REBL
-(defun rebl-eval-last-sexp ()
-  (interactive)
-  (let* ((bounds (cider-last-sexp 'bounds))
-         (s (cider-last-sexp))
-         (reblized (concat "(cognitect.rebl/inspect " s ")")))
-    (cider-interactive-eval reblized nil bounds (cider--nrepl-print-request-map))))
-
-;; Similar to C-M-x, but sends to REBL
-(defun rebl-eval-defun-at-point ()
-  (interactive)
-  (let* ((bounds (cider-defun-at-point 'bounds))
-         (s (cider-defun-at-point))
-         (reblized (concat "(cognitect.rebl/inspect " s ")")))
-    (cider-interactive-eval reblized nil bounds (cider--nrepl-print-request-map))))
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
 
 ;; C-S-x send defun to rebl
 ;; C-x C-r send last sexp to rebl (Normally bound to "find-file-read-only"... Who actually uses that though?)
@@ -239,11 +201,5 @@
   (set-lookup-handlers! 'clj-refactor-mode nil))
 
 (setq cljr-add-ns-to-blank-clj-files nil) ; disable clj-refactor adding ns to blank files
-
-
-(let ((private-emacs-path "~/.doom-private/"))
-  (when (file-directory-p private-emacs-path)
-    (add-to-list 'load-path private-emacs-path)
-    (require 'private)))
 
 (setq auto-save-default t)
