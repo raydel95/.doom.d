@@ -82,14 +82,6 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
-;; C-S-x send defun to rebl
-;; C-x C-r send last sexp to rebl (Normally bound to "find-file-read-only"... Who actually uses that though?)
-(add-hook 'cider-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-S-x") #'rebl-eval-defun-at-point)
-            (local-set-key (kbd "C-x C-r") #'rebl-eval-last-sexp)))
-
-
 ;; apps configuration
 (map! :leader
       (:prefix ("a" . "apps")
@@ -106,29 +98,33 @@
 (setq doom-themes-treemacs-theme "doom-colors") ;;treemacs theme
 (doom-themes-treemacs-config)
 
-
-(defun typescript-mode-setup ()
-  "Custom setup for Typescript mode"
-  (setq flycheck-checker 'javascript-eslint)
-  )
-(add-hook 'typescript-mode-hook 'typescript-mode-setup)
-
-
-;; lsp-config
-(add-hook 'clojure-mode-hook 'lsp)
-(add-hook 'clojurescript-mode-hook 'lsp)
-(add-hook 'clojurec-mode-hook 'lsp)
-
-(setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      treemacs-space-between-root-nodes nil
-      company-idle-delay 0.0
-      company-minimum-prefix-length 1
-      lsp-lens-enable t
-      lsp-signature-auto-activate nil
-      ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
-      ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
-      )
+(use-package! lsp-mode
+  :commands lsp
+  :hook ((clojure-mode . lsp)
+         (dart-mode . lsp)
+         (java-mode . lsp))
+  :config
+  (let ((omnisharp-path (-some-> (executable-find "omnisharp")
+                          file-chase-links
+                          file-name-directory
+                          directory-file-name
+                          file-name-directory)))
+    (when omnisharp-path
+      (setq lsp-csharp-server-install-dir omnisharp-path
+            lsp-csharp-server-path (f-join omnisharp-path "bin/omnisharp")))
+    (setq lsp-headerline-breadcrumb-enable nil
+          lsp-lens-enable t
+          lsp-enable-file-watchers t
+          lsp-signature-render-documentation nil
+          lsp-signature-function 'lsp-signature-posframe
+          lsp-semantic-tokens-enable t
+          lsp-idle-delay 0.3
+          lsp-use-plists nil
+          lsp-completion-sort-initial-results t ; check if should keep as t
+          lsp-completion-no-cache t
+          lsp-completion-use-last-result nil))
+  (advice-add #'lsp-rename :after (lambda (&rest _) (projectile-save-project-buffers)))
+  (add-hook 'lsp-mode-hook (lambda () (setq-local company-format-margin-function #'company-vscode-dark-icons-margin))))
 
 (use-package! lsp-treemacs
   :config
@@ -140,6 +136,7 @@
   :config
   (setq lsp-ui-peek-list-width 60
         lsp-ui-doc-max-width 60
+        lsp-ui-doc-enable nil
         lsp-ui-peek-fontify 'always
         lsp-ui-sideline-show-code-actions nil))
 
@@ -184,5 +181,12 @@
   (setq clojure-indent-style 'align-arguments
         clojure-thread-all-but-last t)
   (cljr-add-keybindings-with-prefix "C-c C-c"))
+
+(use-package! company
+  :config
+  (setq company-tooltip-align-annotations t
+        company-icon-size 20))
+
+
 
 (setq auto-save-default t)
