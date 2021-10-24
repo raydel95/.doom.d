@@ -149,13 +149,40 @@
 (use-package! cider
   :after clojure-mode
   :config
-  (set-lookup-handlers! 'cider-mode nil))
+  (setq cider-ns-refresh-show-log-buffer t
+        cider-show-error-buffer t ;'only-in-repl
+        cider-font-lock-dynamically nil ; use lsp semantic tokens
+        cider-eldoc-display-for-symbol-at-point nil ; use lsp
+        cider-prompt-for-symbol nil)
+  (set-popup-rule! "*cider-test-report*" :side 'right :width 0.4)
+  (set-popup-rule! "^\\*cider-repl" :side 'bottom :quit nil)
+  (set-lookup-handlers! 'cider-mode nil) ; use lsp
+  (add-hook 'cider-mode-hook (lambda () (remove-hook 'completion-at-point-functions #'cider-complete-at-point))) ; use lsp
+  )
 
 (use-package! clj-refactor
   :after clojure-mode
   :config
-  (set-lookup-handlers! 'clj-refactor-mode nil))
+  (set-lookup-handlers! 'clj-refactor-mode nil)
+  (setq cljr-warn-on-eval nil
+        cljr-eagerly-build-asts-on-startup nil
+        cljr-add-ns-to-blank-clj-files nil ; use lsp
+        cljr-magic-require-namespaces
+        '(("s"   . "schema.core")
+          ("gen" . "common-test.generators")
+          ("d-pro" . "common-datomic.protocols.datomic")
+          ("ex" . "common-core.exceptions.core")
+          ("dth" . "common-datomic.test-helpers")
+          ("t-money" . "common-core.types.money")
+          ("t-time" . "common-core.types.time")
+          ("d" . "datomic.api")
+          ("m" . "matcher-combinators.matchers")
+          ("pp" . "clojure.pprint"))))
 
-(setq cljr-add-ns-to-blank-clj-files nil) ; disable clj-refactor adding ns to blank files
+(use-package! clojure-mode
+  :config
+  (setq clojure-indent-style 'align-arguments
+        clojure-thread-all-but-last t)
+  (cljr-add-keybindings-with-prefix "C-c C-c"))
 
 (setq auto-save-default t)
