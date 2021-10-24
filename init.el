@@ -20,9 +20,9 @@
 
        :completion
        (company            ; the ultimate code completion backend
-        ;; +auto              ; as-you-type code completion
+        ;; +auto           ; as-you-type code completion
         ;; +childframe
-        )       ; the *other* search engine for love and life
+        )                  ; the *other* search engine for love and life
        ; helm
        ;; ido              ; the other *other* search engine...
        (ivy                ; a search engine for love and life
