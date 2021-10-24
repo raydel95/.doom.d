@@ -32,7 +32,6 @@
       user-mail-address "ivan.galban.smith@gmail.com")
 
 
-
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 
@@ -92,53 +91,10 @@
 
 
 ;; apps configuration
-;;dired
-(setq ranger-show-hidden t
-      ranger-preview-file t)
-
 (map! :leader
       (:prefix ("a" . "apps")
        :desc "processes" "p" 'list-processes
-       :desc "ranger" "r" 'ranger
        :desc "deer" "d" 'deer))
-
-
-;; FIXME:
-;; (map! :leader
-;;       (:prefix ("c" . "code")
-;;        "l" 'evilnc-comment-or-uncomment-lines
-;;        "p" 'evilnc-comment-or-uncomment-paragraphs
-;;        "y" 'evilnc-copy-and-comment-lines
-;;        "t" 'evilnc-quick-comment-or-uncomment-to-the-line))
-
-
-;;; Major Mode
-
-;; Clojure
-
-(add-hook! clojure-mode
-  (map!
-   (:map (clojure-mode-map clojurescript-mode-map)
-    (:localleader
-     (:prefix ("s" . "send-to-rebl")
-      ("d" #'rebl-eval-defun-at-point)
-      ("e" #'rebl-eval-last-sexp))
-     (:prefix ("e" . "eval")
-     (";" #'cider-eval-defun-to-comment)
-     (:prefix ("p" . "pprint")
-      (":" #'cider-pprint-eval-last-sexp-to-comment)
-      (";" #'cider-pprint-eval-defun-to-comment)
-      ("d" #'cider-pprint-eval-defun-at-point)
-      ("e" #'cider-pprint-eval-last-sexp)))
-     (:prefix ("=" . "format")
-      ("=" #'cider-format-buffer
-       "f" #'cider-format-defun
-       "l" #'clojure-align
-       "r" #'cider-format-region
-       (:prefix ("e" . "edn")
-        ("b" #'cider-format-edn-buffer
-         "a" #'cider-format-edn-last-sexp
-         "r" #'cider-format-edn-region))))))))
 
 ;;modeline
 (setq inhibit-compacting-font-caches t)

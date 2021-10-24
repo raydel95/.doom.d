@@ -50,7 +50,6 @@
 
 ;(unpin! t)
 
-(package! ranger)
 (package! treemacs-all-the-icons)
 (package! yaml-mode)
 
