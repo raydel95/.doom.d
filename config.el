@@ -1,23 +1,47 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;; Here are some additional functions/macros that could help you configure Doom:
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
+;; This will open documentation for it, including demos of how they are used.
+;;
+;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
+;; they are implemented.
+
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+(let ((nudev-emacs-path "~/dev/nu/nudev/ides/emacs/"))
+  (when (file-directory-p nudev-emacs-path)
+    (add-to-list 'load-path nudev-emacs-path)
+    (require 'nu nil t)
+    (require 'nu-datomic-query nil t)))
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "Raydel Enrique Alonso Baryolo"
+(setq user-full-name    "Raydel Enrique Alonso Baryolo"
       user-mail-address "raydelalonsobaryolo@gmail.com")
+
+
+
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
-
-
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 
+;; (setq display-line-numbers-type t)
 
 ;; disable confirmation message on exit
 (setq confirm-kill-emacs nil)
@@ -35,8 +59,8 @@
       doom-modeline-buffer-encoding t)
 
 ;; font
-(setq doom-font (font-spec  :family "Source Code Pro" :size 14)
-            doom-big-font (font-spec :family "Source Code Pro" :size 22))
+(setq doom-font     (font-spec :family "Source Code Pro" :size 14)
+      doom-big-font (font-spec :family "Source Code Pro" :size 22))
 
 
 (setq-default
@@ -58,51 +82,18 @@
 
 (setq +ivy-buffer-preview t)
 
-(setq doom-theme 'doom-vibrant)                   ; theme
-;; (delq! t custom-theme-load-path)
+(setq doom-theme 'doom-vibrant)
 
-;; (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1)) ; use flyspell-lazy
-
-
-;; company improvment
-(setq
- company-selection-wrap-around t
- company-idle-delay 0.0
- company-box-doc-delay 0.0
- company-box-show-single-candidate t
- company-minimum-prefix-length 0
- company-show-numbers t)
-(setq-default history-length 1000)
-(setq-default prescient-history-length 1000)
-
-;; Workaround bug in completion (see autolad.el)
-;; (after! cider
-;;   (add-hook 'company-completion-started-hook 'user/set-company-maps)
-;;   (add-hook 'company-completion-finished-hook 'user/unset-company-maps)
-;;   (add-hook 'company-completion-cancelled-hook 'user/unset-company-maps))
-
-(add-hook 'company-completion-started-hook 'user/set-company-maps)
-(add-hook 'company-completion-finished-hook 'user/unset-company-maps)
-(add-hook 'company-completion-cancelled-hook 'user/unset-company-maps)
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
 
 ;; apps configuration
-;;dired
-(setq ranger-show-hidden t
-      ranger-preview-file t)
-
 (map! :leader
       (:prefix ("a" . "apps")
        :desc "processes" "p" 'list-processes
        :desc "ranger" "r" 'ranger
        :desc "deer" "d" 'deer))
-
-
-;; (map! :leader
-;;       (:prefix ("c" . "code")
-;;        "l" 'evilnc-comment-or-uncomment-lines
-;;        "p" 'evilnc-comment-or-uncomment-paragraphs
-;;        "y" 'evilnc-copy-and-comment-lines
-;;        "t" 'evilnc-quick-comment-or-uncomment-to-the-line))
 
 (add-hook! clojure-mode
   (map!
@@ -137,37 +128,85 @@
 
 (setq org-babel-clojure-backend 'cider)
 
+(use-package! lsp-mode
+  :commands lsp
+  :hook ((clojure-mode . lsp))
+  :config
+    (setq lsp-headerline-breadcrumb-enable nil
+          lsp-lens-enable t
+          lsp-enable-file-watchers t
+          lsp-signature-render-documentation t
+          lsp-signature-function 'lsp-signature-posframe
+          lsp-semantic-tokens-enable t
+          lsp-idle-delay 0.3
+          lsp-use-plists nil
+          lsp-completion-sort-initial-results t ; check if should keep as t
+          lsp-completion-no-cache t
+          lsp-completion-use-last-result nil)
+  (advice-add #'lsp-rename :after (lambda (&rest _) (projectile-save-project-buffers)))
+  (add-hook 'lsp-mode-hook (lambda () (setq-local company-format-margin-function #'company-vscode-dark-icons-margin)))
+  )
 
+(use-package! lsp-treemacs
+  :config
+  (setq lsp-treemacs-error-list-current-project-only t))
 
-;;lsp-config
-(add-hook 'clojure-mode-hook 'lsp)
-(add-hook 'clojurescript-mode-hook 'lsp)
-(add-hook 'clojurec-mode-hook 'lsp)
+(use-package! lsp-ui
+  :after lsp-mode
+  :commands lsp-ui-mode
+  :config
+  (setq lsp-ui-peek-list-width 60
+        lsp-ui-doc-max-width 60
+        lsp-ui-doc-enable t
+        lsp-ui-peek-fontify 'always
+        lsp-ui-sideline-show-code-actions t))
 
-(setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      treemacs-space-between-root-nodes nil
-      company-idle-delay 0.0
-      company-minimum-prefix-length 0
-      lsp-lens-enable t
-      lsp-signature-auto-activate nil
-      ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
-      ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
-      )
+(use-package! treemacs-all-the-icons
+  :after treemacs)
 
 (use-package! cider
   :after clojure-mode
   :config
-  (set-lookup-handlers! 'cider-mode nil)
-  (setq cider-lein-parameters
-      (concat "with-profiles +nrebl " cider-lein-parameters)))
+  (setq cider-ns-refresh-show-log-buffer t
+        cider-show-error-buffer t ;'only-in-repl
+        cider-font-lock-dynamically nil ; use lsp semantic tokens
+        cider-eldoc-display-for-symbol-at-point nil ; use lsp
+        cider-prompt-for-symbol nil)
+  (set-popup-rule! "*cider-test-report*" :side 'right :width 0.4)
+  (set-popup-rule! "^\\*cider-repl" :side 'bottom :quit nil)
+  (set-lookup-handlers! 'cider-mode nil) ; use lsp
+  (add-hook 'cider-mode-hook (lambda () (remove-hook 'completion-at-point-functions #'cider-complete-at-point))) ; use lsp
+  )
 
 (use-package! clj-refactor
   :after clojure-mode
   :config
-  (set-lookup-handlers! 'clj-refactor-mode nil))
+  (set-lookup-handlers! 'clj-refactor-mode nil)
+  (setq cljr-warn-on-eval nil
+        cljr-eagerly-build-asts-on-startup nil
+        cljr-add-ns-to-blank-clj-files nil ; use lsp
+        cljr-magic-require-namespaces
+        '(("s"   . "schema.core")
+          ("gen" . "common-test.generators")
+          ("protocols.datomic" . "common-datomic.protocols.datomic")
+          ("ex" . "common-core.exceptions.core")
+          ("dth" . "common-datomic.test-helpers")
+          ("types.money" . "common-core.types.money")
+          ("types.time" . "common-core.types.time")
+          ("d" . "datomic.api")
+          ("m" . "matcher-combinators.matchers")
+          ("pp" . "clojure.pprint"))))
 
-(setq cljr-add-ns-to-blank-clj-files nil) ; disable clj-refactor adding ns to blank files
+(use-package! clojure-mode
+  :config
+  (setq clojure-indent-style 'align-arguments
+        clojure-thread-all-but-last t)
+  (cljr-add-keybindings-with-prefix "C-c C-c"))
+
+(use-package! company
+  :config
+  (setq company-tooltip-align-annotations t
+        company-icon-size 20))
 
 
 ;; lispyville
@@ -201,4 +240,3 @@
     (require 'private)))
 
 (setq auto-save-default t)
-(auto-save-mode 1)

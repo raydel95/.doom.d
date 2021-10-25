@@ -50,11 +50,11 @@
 
 ;(unpin! t)
 
+
 (package! ranger)
-
-(package! flyspell-lazy :pin "3ebf68cc9eb10c972a2de8d7861cbabbbce69570")
-
-(package! grip-mode)
+(package! flyspell-lazy)
+(package! treemacs-all-the-icons)
+(package! yaml-mode)
 
 (package! nov)
 
@@ -71,3 +71,8 @@
 (package! company)
 
 (package! lispyville)
+
+;; (unpin! treemacs)
+;; (unpin! lsp-treemacs)
+;; (unpin! lsp-mode)
+(unpin! lsp-ui)
