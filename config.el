@@ -31,6 +31,8 @@
 (setq user-full-name "Ivan Galban"
       user-mail-address "ivan.galban.smith@gmail.com")
 
+(add-hook 'java-mode-hook (lambda () (setq left-fringe-width 16)))
+
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -98,6 +100,23 @@
 (setq doom-themes-treemacs-theme "doom-colors") ;;treemacs theme
 (doom-themes-treemacs-config)
 
+(use-package! lsp-java
+  :after lsp
+  :config
+  (setq lsp-java-references-code-lens-enabled t
+        lsp-java-implementations-code-lens-enabled t
+        lsp-file-watch-ignored-directories
+        '(".idea" ".ensime_cache" ".eunit" "node_modules"
+          ".git" ".hg" ".fslckout" "_FOSSIL_"
+          ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
+          "build")))
+
+(use-package! dap-mode
+  :init
+  (require 'dap-chrome)
+  :config
+  (setq dap-enable-mouse-support nil))
+
 (use-package! lsp-mode
   :commands lsp
   :hook ((clojure-mode . lsp)
@@ -154,7 +173,7 @@
   (set-popup-rule! "*cider-test-report*" :side 'right :width 0.4)
   (set-popup-rule! "^\\*cider-repl" :side 'bottom :quit nil)
   (set-lookup-handlers! 'cider-mode nil) ; use lsp
-  (add-hook 'cider-mode-hook (lambda () (remove-hook 'completion-at-point-functions #'cider-complete-at-point))) ; use lsp
+  ;; (add-hook 'cider-mode-hook (lambda () (remove-hook 'completion-at-point-functions #'cider-complete-at-point))) ; use lsp
   )
 
 (use-package! clj-refactor
