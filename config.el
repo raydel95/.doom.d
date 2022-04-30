@@ -39,16 +39,6 @@
 (display-time-mode 1)                             ; Enable time in the mode-line
 (display-battery-mode 1)                          ; On laptops it's nice to know how much power you have
 
-;; (setq-default
-;;  delete-by-moving-to-trash t                      ; Delete files to trash
-;;  window-combination-resize t                      ; take new window space from all other windows (not just current)
-;;  x-stretch-cursor t)
-                                        ; Stretch cursor to the glyph width
-
-;; (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
-
-;; (doom-themes-treemacs-config)
-
 (use-package! lsp-java
   :after java-mode
   :config
@@ -86,12 +76,7 @@
       ;; clojure-lsp local development
       (setq lsp-clojure-custom-server-command `("bash" "-c" ,clojure-lsp-dev)
             lsp-completion-no-cache t
-            lsp-completion-use-last-result nil)))
-
-  ;; Rust
-  (setq lsp-rust-analyzer-server-display-inlay-hints t
-        lsp-rust-analyzer-display-parameter-hints t
-        lsp-rust-analyzer-display-chaining-hints t))
+            lsp-completion-use-last-result nil))))
 
 
 (use-package! lsp-treemacs
