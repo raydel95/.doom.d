@@ -5,3 +5,6 @@
       (:prefix ("a" . "apps")
        :desc "processes" "p" 'list-processes
        :desc "deer" "d" 'deer))
+
+(map! :leader
+       :desc "Expand region" "v" #'er/expand-region)

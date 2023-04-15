@@ -10,10 +10,12 @@
  large-file-warning-threshold 1000000
 
  doom-theme                 'doom-vibrant
- doom-themes-treemacs-theme "doom-colors"
+ doom-themes-treemacs-theme "all-the-icons"
 
  doom-font     (font-spec :family "Source Code Pro" :size 14)
  doom-big-font (font-spec :family "Source Code Pro" :size 22)
+
+ treemacs-width-is-initially-locked nil
 
  doom-modeline-major-mode-icon t
  doom-modeline-env-version t
@@ -70,18 +72,21 @@
     (setq lsp-csharp-server-install-dir omnisharp-path
           lsp-csharp-server-path (f-join omnisharp-path "bin/omnisharp")))
 
+  ;; TODO: compile image
   ;; Clojure
-  (let ((clojure-lsp-dev (expand-file-name "~/dev/clojure-lsp/clojure-lsp/clojure-lsp")))
-    (when (file-exists-p clojure-lsp-dev)
-      ;; clojure-lsp local development
-      (setq lsp-clojure-custom-server-command `("bash" "-c" ,clojure-lsp-dev)
-            lsp-completion-no-cache t
-            lsp-completion-use-last-result nil))))
+  ;; (let ((clojure-lsp-dev (expand-file-name "~/dev/clojure-lsp/clojure-lsp/clojure-lsp")))
+  ;;   (when (file-exists-p clojure-lsp-dev)
+  ;;     ;; clojure-lsp local development
+  ;;     (setq lsp-clojure-custom-server-command `("bash" "-c" ,clojure-lsp-dev)
+  ;;           lsp-completion-no-cache t
+            ;; lsp-completion-use-last-result nil)))
+  )
 
 
 (use-package! lsp-treemacs
   :config
-  (setq lsp-treemacs-error-list-current-project-only t))
+  (setq lsp-treemacs-error-list-current-project-only t)
+  (set-popup-rule! "\\*Treemacs-Scoped.*\\*" :side 'left :width 0.2))
 
 (use-package! lsp-ui
   :after lsp-mode
