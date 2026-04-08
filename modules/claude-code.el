@@ -59,6 +59,15 @@
 ;; PACKAGE CONFIGURATION
 ;; ============================================================================
 
+;; Doom's vertico module binds SPC a to embark-act, which conflicts with
+;; our AI prefix. Move embark-act to SPC ; (mnemonic: C-; is embark-act
+;; globally, so SPC ; mirrors it under leader). C-; still works everywhere.
+(map! :leader "a" nil)
+(after! embark
+  (map! :leader
+        "a" nil
+        :desc "Embark act" ";" #'embark-act))
+
 (use-package! claude-code-ide
   :commands (claude-code-ide-menu
              claude-code-ide
