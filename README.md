@@ -65,8 +65,8 @@ LSP-first approach, daemon mode, Claude Code IDE integration.
 | `SPC g t` | git-timemachine | Browse file history in-place |
 | `SPC g y` | git-link | Copy GitHub URL for current line |
 | `SPC g Y` | git-link-commit | Copy GitHub URL for current commit |
-| `SPC g H` | git-link-homepage | Open repo on GitHub |
-| `SPC g d` | magit-diff-buffer-file | Diff current file |
+| `SPC g O` | git-link-homepage | **O**pen repo on GitHub |
+| `SPC g d` | magit-diff-buffer-file | **D**iff current file |
 | `SPC g B` | magit-blame | Git blame |
 | `SPC g L` | magit-log-buffer-file | File log |
 
@@ -77,18 +77,24 @@ LSP-first approach, daemon mode, Claude Code IDE integration.
 | `SPC c r` | lsp-find-references | Find references |
 | `SPC c a` | lsp-execute-code-action | Code actions |
 | `SPC c R` | lsp-rename | Rename symbol |
-| `SPC c f` | lsp-format-buffer | Format buffer via LSP |
-| `SPC c W` | lsp-workspace-restart | Restart LSP server |
-| `SPC c ~` | string-inflection-all-cycle | Cycle case: kebab/camel/pascal/snake |
-| `SPC c -` | string-inflection-kebab-case | Convert to kebab-case |
-| `SPC c i` | string-inflection-camelcase | Convert to camelCase |
-| `SPC c C` | string-inflection-pascal-case | Convert to PascalCase |
+| `SPC c f` | lsp-format-buffer | **F**ormat buffer via LSP |
+| `SPC c W` | lsp-workspace-restart | Restart LSP **w**orkspace |
+
+#### Code Style (SPC c s)
+| Key | Command | Description |
+|-----|---------|-------------|
+| `SPC c s s` | string-inflection-all-cycle | Cycle all styles |
+| `SPC c s k` | string-inflection-kebab-case | **k**ebab-case |
+| `SPC c s c` | string-inflection-camelcase | **c**amelCase |
+| `SPC c s p` | string-inflection-pascal-case | **P**ascalCase |
+| `SPC c s _` | string-inflection-underscore | snake_case |
+| `SPC c s !` | string-inflection-upcase | SCREAMING_SNAKE |
 
 #### Help (SPC h)
 | Key | Command | Description |
 |-----|---------|-------------|
-| `SPC h D` | devdocs-lookup | Browse DevDocs (Go stdlib, Clojure, etc.) |
-| `SPC h P` | devdocs-peruse | Browse entire doc set |
+| `SPC h D` | devdocs-lookup | DevDocs lookup |
+| `SPC h B` | devdocs-peruse | DevDocs **b**rowse |
 | `SPC h d` | describe-function | Describe function |
 | `SPC h k` | describe-key | Describe key |
 
@@ -226,10 +232,10 @@ LSP-first approach, daemon mode, Claude Code IDE integration.
 | nerd-icons-corfu | Type icons in completion popup | Automatic |
 | consult-lsp | LSP workspace symbol search | `SPC s S` / `SPC s D` |
 | ace-window | Number-based window jumping | `SPC w w` |
-| string-inflection | Case style cycling (kebab/camel/pascal/snake) | `SPC c ~` / `g~` |
+| string-inflection | Case style conversion | `SPC c s` prefix / `g~` |
 | git-timemachine | Browse file history in-place | `SPC g t` |
-| git-link | Copy GitHub URL for current file+line | `SPC g y` |
-| devdocs | Browse DevDocs.io inside Emacs | `SPC h D` |
+| git-link | Copy GitHub URL for current file+line | `SPC g y` / `SPC g O` |
+| devdocs | Browse DevDocs.io inside Emacs | `SPC h D` / `SPC h B` |
 | pcre2el | Regex syntax conversion (PCRE/Elisp/rx) | `SPC r` prefix |
 
 ### Claude Code MCP Tools (inside Emacs sessions)

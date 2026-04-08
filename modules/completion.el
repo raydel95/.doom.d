@@ -56,4 +56,21 @@
   (defun my/add-cape-keyword-h ()
     (add-hook 'completion-at-point-functions #'cape-keyword 15 t)))
 
+;; ============================================================================
+;; EMBARK EXTRAS
+;; ============================================================================
+
+;; embark-act (C-;) is bound by Doom's vertico module.
+;; embark-dwim runs the default action for thing at point without showing a menu.
+(map! "C-." #'embark-dwim)
+
+;; ============================================================================
+;; CONSULT EXTRA BINDINGS
+;; ============================================================================
+
+(map! :leader
+      (:prefix ("s" . "search")
+       :desc "File symbols (LSP)" "f" #'consult-lsp-file-symbols
+       :desc "Outline (headings)" "o" #'consult-outline))
+
 ;;; modules/completion.el ends here
