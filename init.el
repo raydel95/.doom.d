@@ -8,8 +8,8 @@
        ;; No input methods needed
 
        :completion
-       (corfu +orderless)       ; Modern completion with orderless matching
-       vertico                  ; Vertical completion UI
+       (corfu +orderless +dabbrev) ; Completion with fuzzy matching + word fallback from all buffers
+       vertico                    ; Vertical completion UI (includes consult, embark, marginalia)
 
        :ui
        doom                     ; Doom's aesthetic

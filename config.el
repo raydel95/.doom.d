@@ -21,6 +21,7 @@
 ;; ============================================================================
 
 (load! "modules/ui")
+(load! "modules/completion")
 (load! "modules/performance")
 (load! "modules/lsp")
 (load! "modules/lang-clojure")
