@@ -26,6 +26,7 @@
 (load! "modules/lsp")
 (load! "modules/lang-clojure")
 (load! "modules/lang-go")
+(load! "modules/tools")
 (load! "modules/claude-code")
 
 ;;; config.el ends here
