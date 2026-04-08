@@ -68,6 +68,9 @@
         "a" nil
         :desc "Embark act" ";" #'embark-act)
 
+  ;; TAB cycles between target types inside embark (symbol → defun → file → ...)
+  (setq embark-cycle-key (kbd "TAB"))
+
   ;; --- Embark → Claude actions ---
   ;; Press C-; on any target, then C to send it to Claude.
 
