@@ -205,38 +205,91 @@ LSP-first approach, daemon mode, Claude Code IDE integration.
 
 ### Doom Modules (via init.el)
 
-**Completion**: corfu (+orderless +dabbrev), vertico (includes consult, embark, marginalia, cape)
+#### Completion
+| Module | What it does |
+|--------|-------------|
+| corfu (+orderless +dabbrev) | As-you-type popup suggestions. Orderless lets you type words in any order to match ("buf swi" finds "switch-to-buffer"). Dabbrev adds words from other open buffers as fallback suggestions. |
+| vertico | Vertical list when you press `M-x` or search for files. Bundles consult (preview search results), embark (right-click actions on any item), marginalia (shows descriptions next to items), and cape (extra completion sources). |
 
-**UI**: doom, doom-dashboard, hl-todo, modeline, nav-flash, ophints, popup, vc-gutter, vi-tilde-fringe, workspaces
+#### UI
+| Module | What it does |
+|--------|-------------|
+| doom | The Doom look — themes, fonts, and overall styling |
+| doom-dashboard | The splash screen you see when Emacs starts |
+| hl-todo | Highlights `TODO`, `FIXME`, `HACK`, `NOTE` in code comments with colors |
+| modeline | The status bar at the bottom showing file name, git branch, line number |
+| nav-flash | Briefly flashes the cursor line after a big jump so you don't lose your place |
+| ophints | Highlights the region you just operated on (e.g., after yanking or deleting) |
+| popup (+defaults) | Controls how temporary windows appear (REPL, test results, help) |
+| vc-gutter (+pretty) | Shows colored marks in the left margin for added/changed/deleted lines (git diff) |
+| vi-tilde-fringe | Shows `~` characters after the end of file, like Vim |
+| workspaces | Tab-like workspaces — each project gets its own set of buffers |
 
-**Editor**: evil (+everywhere), file-templates, fold, multiple-cursors, snippets, whitespace (+guess +trim)
+#### Editor
+| Module | What it does |
+|--------|-------------|
+| evil (+everywhere) | Vim keybindings everywhere — `hjkl` movement, modal editing, visual mode |
+| file-templates | Auto-inserts boilerplate when you create a new file (e.g., namespace declaration for `.clj`) |
+| fold | Code folding — collapse/expand functions and blocks with `za` |
+| multiple-cursors | Edit multiple places at once — select a word, press a key, all matching words get cursors |
+| snippets | Type a short trigger (e.g., `defn`) and expand it into a full code template |
+| whitespace (+guess +trim) | Auto-detects indent style and trims trailing whitespace on save |
 
-**Emacs**: dired (+icons), electric, tramp, undo, vc
+#### Emacs
+| Module | What it does |
+|--------|-------------|
+| dired (+icons) | Built-in file manager with file type icons |
+| electric | Smart auto-indentation as you type |
+| tramp | Edit files on remote servers over SSH as if they were local |
+| undo | Persistent undo history — survives closing and reopening files |
+| vc | Version control integration (git status, diff, log) |
 
-**Terminal**: vterm
+#### Terminal
+| Module | What it does |
+|--------|-------------|
+| vterm | Full terminal emulator inside Emacs — runs shell, Claude Code, any CLI tool |
 
-**Checkers**: syntax (flycheck)
+#### Checkers
+| Module | What it does |
+|--------|-------------|
+| syntax | Real-time error checking — red squiggles and warnings as you type (via flycheck) |
 
-**Tools**: direnv, editorconfig, eval (+overlay), lookup, lsp, tree-sitter, magit
+#### Tools
+| Module | What it does |
+|--------|-------------|
+| direnv | Auto-loads environment variables when you enter a project directory (`.envrc` files) |
+| editorconfig | Reads `.editorconfig` files to set indent size, line endings per project |
+| eval (+overlay) | Run code and show results inline — evaluate expressions without leaving the buffer |
+| lookup | Jump to definition (`gd`), find references, look up documentation |
+| lsp | Language Server Protocol — powers go-to-definition, autocomplete, rename, error checking for all languages |
+| tree-sitter | Better syntax highlighting using an actual code parser instead of regex |
+| magit | The best Git interface — stage, commit, push, merge, rebase, all from inside Emacs |
 
-**OS**: macos
-
-**Languages**: clojure (+lsp), go (+lsp +tree-sitter), emacs-lisp, markdown, org, sh, data
+#### Languages
+| Module | What it does |
+|--------|-------------|
+| clojure (+lsp) | Clojure/ClojureScript support with LSP-powered navigation (works without a REPL running) |
+| go (+lsp +tree-sitter) | Go support with gopls LSP server and tree-sitter parsing |
+| emacs-lisp | Support for editing Doom config and Emacs packages |
+| markdown | Markdown preview, formatting, and table editing |
+| org | Org-mode for notes, planning, and documents |
+| sh | Shell script editing and syntax checking |
+| data | JSON, YAML, TOML, CSV file support |
 
 ### Custom Packages (via packages.el)
 
-| Package | Purpose | Key binding |
-|---------|---------|-------------|
-| lispyville | Vim-style structural Lisp editing | Automatic in Clojure/Elisp buffers |
-| claude-code-ide | MCP bridge to Claude Code CLI | `SPC a` prefix |
-| nerd-icons-corfu | Type icons in completion popup | Automatic |
-| consult-lsp | LSP workspace symbol search | `SPC s S` / `SPC s D` |
-| ace-window | Number-based window jumping | `SPC w w` |
-| string-inflection | Case style conversion | `SPC c s` prefix / `g~` |
-| git-timemachine | Browse file history in-place | `SPC g t` |
-| git-link | Copy GitHub URL for current file+line | `SPC g y` / `SPC g O` |
-| devdocs | Browse DevDocs.io inside Emacs | `SPC h D` / `SPC h B` |
-| pcre2el | Regex syntax conversion (PCRE/Elisp/rx) | `SPC r` prefix |
+| Package | What it does | Key binding |
+|---------|-------------|-------------|
+| lispyville | Makes Vim motions aware of parentheses — `dd` won't break your Clojure code, slurp/barf move parens | Automatic in Clojure/Elisp buffers |
+| claude-code-ide | Connects Claude Code CLI to Emacs — Claude can open files, show diffs, read errors, and use your REPL | `SPC a` prefix |
+| nerd-icons-corfu | Shows small icons next to completion suggestions (function, variable, class, module) | Automatic |
+| consult-lsp | Search all symbols or errors across your entire project with live preview | `SPC s S` / `SPC s D` |
+| ace-window | Numbers appear on each window, press the number to jump there instantly | `SPC w w` |
+| string-inflection | Convert between naming styles: `my-name` to `myName` to `MyName` to `my_name` | `SPC c s` prefix / `g~` |
+| git-timemachine | Step through old versions of a file — press `p`/`n` to go back/forward in history | `SPC g t` |
+| git-link | Copies a GitHub URL for the exact line you're on — paste it in Slack or a PR | `SPC g y` / `SPC g O` |
+| devdocs | Read Go stdlib docs, Clojure docs, etc. inside Emacs without opening a browser | `SPC h D` / `SPC h B` |
+| pcre2el | Translate between regex flavors — paste a Java regex, get the Emacs equivalent | `SPC r` prefix |
 
 ### Claude Code MCP Tools (inside Emacs sessions)
 
