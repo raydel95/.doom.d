@@ -1,4 +1,2 @@
-/.nrepl-port
-flycheck_autoload.el
-flycheck_custom.el
-flycheck_config.el
+custom.el
+.local/

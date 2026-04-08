@@ -50,6 +50,7 @@
        (eval +overlay)          ; REPL support
        lookup                   ; Code navigation
        lsp                      ; Language Server Protocol (critical for Clojure)
+       tree-sitter              ; Tree-sitter parsing (required by Go +tree-sitter)
        magit                    ; Git porcelain
 
        :os
