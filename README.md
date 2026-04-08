@@ -44,6 +44,8 @@ LSP-first approach, daemon mode, Claude Code IDE integration.
 | `SPC /` | +default/search-project | Ripgrep project search with preview |
 | `SPC s s` | consult-line | Search in current buffer |
 | `SPC s i` | consult-imenu | Jump to symbol in file |
+| `SPC s f` | consult-lsp-file-symbols | LSP symbols in current file |
+| `SPC s o` | consult-outline | Jump to heading (Org/Markdown) |
 | `SPC s S` | consult-lsp-symbols | Search ALL symbols across LSP workspace |
 | `SPC s D` | consult-lsp-diagnostics | Browse all LSP errors/warnings |
 
@@ -63,21 +65,30 @@ LSP-first approach, daemon mode, Claude Code IDE integration.
 | `SPC g t` | git-timemachine | Browse file history in-place |
 | `SPC g y` | git-link | Copy GitHub URL for current line |
 | `SPC g Y` | git-link-commit | Copy GitHub URL for current commit |
+| `SPC g H` | git-link-homepage | Open repo on GitHub |
+| `SPC g d` | magit-diff-buffer-file | Diff current file |
 | `SPC g B` | magit-blame | Git blame |
+| `SPC g L` | magit-log-buffer-file | File log |
 
 #### Code (SPC c)
 | Key | Command | Description |
 |-----|---------|-------------|
-| `SPC c ~` | string-inflection-all-cycle | Cycle case: kebab/camel/pascal/snake |
 | `SPC c d` | lsp-find-definition | Go to definition |
 | `SPC c r` | lsp-find-references | Find references |
 | `SPC c a` | lsp-execute-code-action | Code actions |
 | `SPC c R` | lsp-rename | Rename symbol |
+| `SPC c f` | lsp-format-buffer | Format buffer via LSP |
+| `SPC c W` | lsp-workspace-restart | Restart LSP server |
+| `SPC c ~` | string-inflection-all-cycle | Cycle case: kebab/camel/pascal/snake |
+| `SPC c -` | string-inflection-kebab-case | Convert to kebab-case |
+| `SPC c i` | string-inflection-camelcase | Convert to camelCase |
+| `SPC c C` | string-inflection-pascal-case | Convert to PascalCase |
 
 #### Help (SPC h)
 | Key | Command | Description |
 |-----|---------|-------------|
 | `SPC h D` | devdocs-lookup | Browse DevDocs (Go stdlib, Clojure, etc.) |
+| `SPC h P` | devdocs-peruse | Browse entire doc set |
 | `SPC h d` | describe-function | Describe function |
 | `SPC h k` | describe-key | Describe key |
 
@@ -87,6 +98,7 @@ LSP-first approach, daemon mode, Claude Code IDE integration.
 | `SPC r p` | rxt-pcre-to-elisp | Convert PCRE (Java/Clojure) to Elisp regex |
 | `SPC r e` | rxt-elisp-to-pcre | Convert Elisp regex to PCRE |
 | `SPC r x` | rxt-explain-pcre | Explain a PCRE regex |
+| `SPC r r` | pcre-query-replace-regexp | Search-replace with PCRE syntax |
 
 #### AI / Claude Code (SPC a)
 | Key | Command | Description |
@@ -110,7 +122,9 @@ LSP-first approach, daemon mode, Claude Code IDE integration.
 |-----|---------|-------------|
 | `g~` | string-inflection-all-cycle | Cycle case style (normal mode) |
 | `C-;` | embark-act | Context actions on any candidate |
+| `C-.` | embark-dwim | Default action for thing at point |
 | `C-c C-t` | vterm-copy-mode | Toggle scrollback in vterm |
+| `C-c C-c` | (in vterm) | Send Ctrl-C interrupt to terminal |
 
 ### Clojure Localleader (, prefix)
 
