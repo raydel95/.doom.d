@@ -188,18 +188,63 @@ LSP-first approach, daemon mode, Claude Code IDE integration.
 
 ### Go Localleader (, prefix)
 
-#### Imports (, i)
+Doom's Go module provides most bindings. Our config extends with navigate (`, v`) and gopls tuning.
+
+#### Tags & Playground
 | Key | Command | Description |
 |-----|---------|-------------|
-| `, i a` | go-import-add | Add import |
-| `, i d` | go-remove-unused-imports | Remove unused |
+| `, a` | go-tag-add | Add struct tags (json, yaml, etc.) |
+| `, d` | go-tag-remove | Remove struct tags |
+| `, e` | +go/play-buffer-or-region | Send to Go playground |
+| `, i` | go-goto-imports | Jump to imports |
+
+#### Build (, b)
+| Key | Command | Description |
+|-----|---------|-------------|
+| `, b r` | go run . | Run current package |
+| `, b b` | go build | Build |
+| `, b c` | go clean | Clean |
 
 #### Test (, t)
 | Key | Command | Description |
 |-----|---------|-------------|
-| `, t t` | go-test-current-test | Test function |
-| `, t f` | go-test-current-file | Test file |
-| `, t p` | go-test-current-project | Test project |
+| `, t t` | +go/test-rerun | Rerun last test |
+| `, t a` | +go/test-all | Test all |
+| `, t s` | +go/test-single | Test at point |
+| `, t n` | +go/test-nested | Test nested |
+| `, t f` | +go/test-file | Test file |
+| `, t g` | go-gen-test-dwim | Generate test for function |
+| `, t G` | go-gen-test-all | Generate tests for all functions |
+| `, t b s` | +go/bench-single | Benchmark at point |
+| `, t b a` | +go/bench-all | Benchmark all |
+
+#### Generate (, g)
+| Key | Command | Description |
+|-----|---------|-------------|
+| `, g f` | +go/generate-file | go generate (file) |
+| `, g d` | +go/generate-dir | go generate (directory) |
+| `, g a` | +go/generate-all | go generate (all) |
+
+#### Navigate (, v) (custom)
+| Key | Command | Description |
+|-----|---------|-------------|
+| `, v f` | go-goto-function | Jump to function keyword |
+| `, v a` | go-goto-arguments | Jump to arguments |
+| `, v r` | go-goto-return-values | Jump to return values |
+| `, v m` | go-goto-method-receiver | Jump to method receiver |
+| `, v i` | go-goto-imports | Jump to imports |
+| `, v d` | go-goto-function-name | Jump to function name/docstring |
+
+#### Help (, h)
+| Key | Command | Description |
+|-----|---------|-------------|
+| `, h .` | godoc-at-point | Lookup in godoc |
+
+#### Also available
+| Key | Command | Description |
+|-----|---------|-------------|
+| `SPC p t` | projectile-toggle-implementation-and-test | Switch foo.go ↔ foo_test.go |
+| `SPC c a` | lsp-execute-code-action | GoFillStruct, GoImpl, etc. (via gopls) |
 
 ## Installed Packages
 
