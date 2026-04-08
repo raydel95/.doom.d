@@ -123,12 +123,27 @@ LSP-first approach, daemon mode, Claude Code IDE integration.
 | `SPC a x` | my/claude-code-clear | Clear conversation |
 | `SPC a K` | my/claude-code-compact | Compact context |
 
+#### Embark (context actions)
+| Key | Command | Description |
+|-----|---------|-------------|
+| `C-;` | embark-act | Show context actions for thing at point |
+| `C-.` | embark-dwim | Run default action for thing at point |
+| `SPC ;` | embark-act | Same as C-; but under leader |
+| `C-SPC` | +vertico/embark-preview | Preview candidate in minibuffer |
+
+**Embark + Claude**: Press `C-;` on any target, then `C` to send it to Claude:
+
+| Target | C-; then C | What happens |
+|--------|-----------|-------------|
+| Function name | Explain symbol | "Explain what `symbol` does in this codebase" |
+| Selected region | Send region | Prompts for instruction, sends region + instruction |
+| File path | Send file ref | Sends `@filepath` to Claude |
+| Function body | Review function | "Review this function for bugs and improvements" |
+
 #### Other
 | Key | Command | Description |
 |-----|---------|-------------|
 | `g~` | string-inflection-all-cycle | Cycle case style (normal mode) |
-| `C-;` | embark-act | Context actions on any candidate |
-| `C-.` | embark-dwim | Default action for thing at point |
 | `C-c C-t` | vterm-copy-mode | Toggle scrollback in vterm |
 | `C-c C-c` | (in vterm) | Send Ctrl-C interrupt to terminal |
 

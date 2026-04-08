@@ -56,7 +56,7 @@
     (user-error "Buffer is not visiting a file")))
 
 ;; ============================================================================
-;; PACKAGE CONFIGURATION
+;; EMBARK INTEGRATION (Claude actions in context menus)
 ;; ============================================================================
 
 ;; Doom's vertico module binds SPC a to embark-act, which conflicts with
@@ -66,7 +66,56 @@
 (after! embark
   (map! :leader
         "a" nil
-        :desc "Embark act" ";" #'embark-act))
+        :desc "Embark act" ";" #'embark-act)
+
+  ;; --- Embark → Claude actions ---
+  ;; Press C-; on any target, then C to send it to Claude.
+
+  (defun my/claude-embark-explain-symbol (symbol)
+    "Ask Claude to explain SYMBOL in the codebase."
+    (my/claude-code--send-to-terminal
+     (format "Explain what `%s` does in this codebase. Show me where it's defined and how it's used." symbol)))
+
+  (defun my/claude-embark-send-region (start end)
+    "Send the region between START and END to Claude with an instruction prompt."
+    (let* ((text (buffer-substring-no-properties start end))
+           (instruction (read-string "Instruction for Claude: ")))
+      (my/claude-code--send-to-terminal
+       (format "%s\n\n```\n%s\n```" instruction text))))
+
+  (defun my/claude-embark-send-file (file)
+    "Send FILE as an @-reference to Claude."
+    (my/claude-code--send-to-terminal (concat "@" (expand-file-name file))))
+
+  (defun my/claude-embark-review-defun ()
+    "Send the function at point to Claude for review."
+    (interactive)
+    (let ((defun-text (save-excursion
+                        (mark-defun)
+                        (buffer-substring-no-properties (region-beginning) (region-end)))))
+      (deactivate-mark)
+      (my/claude-code--send-to-terminal
+       (format "Review this function for bugs, clarity, and improvements:\n\n```\n%s\n```" defun-text))))
+
+  (defun my/claude-embark-fix-error (diagnostic)
+    "Send DIAGNOSTIC error text to Claude to fix."
+    (my/claude-code--send-to-terminal
+     (format "Fix this error in %s: %s"
+             (file-name-nondirectory (or (buffer-file-name) ""))
+             diagnostic)))
+
+  ;; Register Claude actions in embark target maps.
+  ;; C = Claude in every embark menu.
+  (define-key embark-symbol-map     "C" #'my/claude-embark-explain-symbol)
+  (define-key embark-identifier-map "C" #'my/claude-embark-explain-symbol)
+  (define-key embark-region-map     "C" #'my/claude-embark-send-region)
+  (define-key embark-file-map       "C" #'my/claude-embark-send-file)
+  (define-key embark-defun-map      "C" #'my/claude-embark-review-defun)
+  (define-key embark-general-map    "C" #'my/claude-embark-review-defun))
+
+;; ============================================================================
+;; PACKAGE CONFIGURATION
+;; ============================================================================
 
 (use-package! claude-code-ide
   :commands (claude-code-ide-menu
